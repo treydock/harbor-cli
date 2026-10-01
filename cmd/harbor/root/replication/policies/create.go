@@ -92,10 +92,13 @@ func ConvertToPolicy(view *create.CreateView, registry *models.Registry) *models
 		// ReplicateDeletion is the favored field to use for deletion replication
 		// Deletion is deprecated and will be removed in future versions
 		// However, for updating from false to true, we need to set both fields
-		ReplicateDeletion: view.ReplicateDeletion,
-		Deletion:          view.ReplicateDeletion,
-		CopyByChunk:       &view.CopyByChunk,
-		Filters:           []*models.ReplicationFilter{},
+		ReplicateDeletion:         view.ReplicateDeletion,
+		Deletion:                  view.ReplicateDeletion,
+		DestNamespace:             view.DestNamespace,
+		DestNamespaceReplaceCount: &view.DestNamespaceReplaceCount,
+		CopyByChunk:               &view.CopyByChunk,
+
+		Filters: []*models.ReplicationFilter{},
 	}
 
 	if view.Speed != "" {
