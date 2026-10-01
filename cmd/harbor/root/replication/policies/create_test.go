@@ -127,7 +127,6 @@ func TestValidateCreateView(t *testing.T) {
 			name: "valid with default replace count",
 			view: &create.CreateView{
 				Name:                      "test-policy",
-				DestNamespace:             "",
 				DestNamespaceReplaceCount: -1,
 			},
 			expectError: false,
@@ -142,19 +141,9 @@ func TestValidateCreateView(t *testing.T) {
 			expectError: false,
 		},
 		{
-			name: "valid with replace count 0 and namespace",
-			view: &create.CreateView{
-				Name:                      "test-policy",
-				DestNamespace:             "my-ns",
-				DestNamespaceReplaceCount: 0,
-			},
-			expectError: false,
-		},
-		{
 			name: "invalid replace count -2",
 			view: &create.CreateView{
 				Name:                      "test-policy",
-				DestNamespace:             "my-ns",
 				DestNamespaceReplaceCount: -2,
 			},
 			expectError:   true,
@@ -164,40 +153,10 @@ func TestValidateCreateView(t *testing.T) {
 			name: "invalid replace count 4",
 			view: &create.CreateView{
 				Name:                      "test-policy",
-				DestNamespace:             "my-ns",
 				DestNamespaceReplaceCount: 4,
 			},
 			expectError:   true,
 			errorContains: "must be between -1 and 3",
-		},
-		{
-			name: "invalid empty namespace with non-default replace count",
-			view: &create.CreateView{
-				Name:                      "test-policy",
-				DestNamespace:             "",
-				DestNamespaceReplaceCount: 1,
-			},
-			expectError:   true,
-			errorContains: "dest_namespace is required",
-		},
-		{
-			name: "invalid empty namespace with replace count 0",
-			view: &create.CreateView{
-				Name:                      "test-policy",
-				DestNamespace:             "",
-				DestNamespaceReplaceCount: 0,
-			},
-			expectError:   true,
-			errorContains: "dest_namespace is required",
-		},
-		{
-			name: "valid empty namespace with default replace count -1",
-			view: &create.CreateView{
-				Name:                      "test-policy",
-				DestNamespace:             "",
-				DestNamespaceReplaceCount: -1,
-			},
-			expectError: false,
 		},
 	}
 

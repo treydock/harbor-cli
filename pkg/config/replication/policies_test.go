@@ -26,11 +26,11 @@ func TestLoadConfigFromYAMLorJSON_DestNamespaceReplaceCount(t *testing.T) {
 	tmpDir := t.TempDir()
 
 	tests := []struct {
-		name                string
-		content             string
-		fileType            string
+		name                 string
+		content              string
+		fileType             string
 		expectedReplaceCount int8
-		expectError         bool
+		expectError          bool
 	}{
 		{
 			name: "omitted value produces -1 (YAML)",
@@ -38,9 +38,9 @@ func TestLoadConfigFromYAMLorJSON_DestNamespaceReplaceCount(t *testing.T) {
 name: test-policy
 dest_namespace: my-ns
 `,
-			fileType:            "yaml",
+			fileType:             "yaml",
 			expectedReplaceCount: -1,
-			expectError:         false,
+			expectError:          false,
 		},
 		{
 			name: "omitted value produces -1 (JSON)",
@@ -48,9 +48,9 @@ dest_namespace: my-ns
   "name": "test-policy",
   "dest_namespace": "my-ns"
 }`,
-			fileType:            "json",
+			fileType:             "json",
 			expectedReplaceCount: -1,
-			expectError:         false,
+			expectError:          false,
 		},
 		{
 			name: "explicit value 0 is preserved (YAML)",
@@ -59,9 +59,9 @@ name: test-policy
 dest_namespace: my-ns
 dest_namespace_replace_count: 0
 `,
-			fileType:            "yaml",
+			fileType:             "yaml",
 			expectedReplaceCount: 0,
-			expectError:         false,
+			expectError:          false,
 		},
 		{
 			name: "explicit value 0 is preserved (JSON)",
@@ -70,9 +70,9 @@ dest_namespace_replace_count: 0
   "dest_namespace": "my-ns",
   "dest_namespace_replace_count": 0
 }`,
-			fileType:            "json",
+			fileType:             "json",
 			expectedReplaceCount: 0,
-			expectError:         false,
+			expectError:          false,
 		},
 		{
 			name: "explicit value 1 is preserved (YAML)",
@@ -81,9 +81,9 @@ name: test-policy
 dest_namespace: my-ns
 dest_namespace_replace_count: 1
 `,
-			fileType:            "yaml",
+			fileType:             "yaml",
 			expectedReplaceCount: 1,
-			expectError:         false,
+			expectError:          false,
 		},
 		{
 			name: "explicit value 2 is preserved (YAML)",
@@ -92,9 +92,9 @@ name: test-policy
 dest_namespace: my-ns
 dest_namespace_replace_count: 2
 `,
-			fileType:            "yaml",
+			fileType:             "yaml",
 			expectedReplaceCount: 2,
-			expectError:         false,
+			expectError:          false,
 		},
 		{
 			name: "explicit value 3 is preserved (YAML)",
@@ -103,9 +103,9 @@ name: test-policy
 dest_namespace: my-ns
 dest_namespace_replace_count: 3
 `,
-			fileType:            "yaml",
+			fileType:             "yaml",
 			expectedReplaceCount: 3,
-			expectError:         false,
+			expectError:          false,
 		},
 		{
 			name: "explicit value -1 is preserved (YAML)",
@@ -114,9 +114,9 @@ name: test-policy
 dest_namespace: my-ns
 dest_namespace_replace_count: -1
 `,
-			fileType:            "yaml",
+			fileType:             "yaml",
 			expectedReplaceCount: -1,
-			expectError:         false,
+			expectError:          false,
 		},
 		{
 			name: "explicit value -1 is preserved (JSON)",
@@ -125,9 +125,9 @@ dest_namespace_replace_count: -1
   "dest_namespace": "my-ns",
   "dest_namespace_replace_count": -1
 }`,
-			fileType:            "json",
+			fileType:             "json",
 			expectedReplaceCount: -1,
-			expectError:         false,
+			expectError:          false,
 		},
 		{
 			name: "value -2 is invalid (YAML)",
@@ -136,9 +136,9 @@ name: test-policy
 dest_namespace: my-ns
 dest_namespace_replace_count: -2
 `,
-			fileType:            "yaml",
+			fileType:             "yaml",
 			expectedReplaceCount: 0,
-			expectError:         true,
+			expectError:          true,
 		},
 		{
 			name: "value 4 is invalid (YAML)",
@@ -147,9 +147,9 @@ name: test-policy
 dest_namespace: my-ns
 dest_namespace_replace_count: 4
 `,
-			fileType:            "yaml",
+			fileType:             "yaml",
 			expectedReplaceCount: 0,
-			expectError:         true,
+			expectError:          true,
 		},
 	}
 

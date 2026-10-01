@@ -69,14 +69,14 @@ func TestHasReplicationUpdateFlagChanges_DestNamespaceFlags(t *testing.T) {
 
 func TestApplyReplicationUpdateFlags_DestNamespace_ExplicitOverlay(t *testing.T) {
 	tests := []struct {
-		name                   string
-		initialDestNamespace   string
-		initialReplaceCount    int8
-		args                   []string
-		expectedDestNamespace  string
-		expectedReplaceCount   int8
-		expectError            bool
-		errorContains          string
+		name                  string
+		initialDestNamespace  string
+		initialReplaceCount   int8
+		args                  []string
+		expectedDestNamespace string
+		expectedReplaceCount  int8
+		expectError           bool
+		errorContains         string
 	}{
 		{
 			name:                  "dest-namespace flag updates the value",

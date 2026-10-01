@@ -94,12 +94,6 @@ func validateCreateView(view *create.CreateView) error {
 		return fmt.Errorf("dest_namespace_replace_count must be between -1 and 3, got %d", view.DestNamespaceReplaceCount)
 	}
 
-	// If DestNamespaceReplaceCount is set to a non-default value (> -1),
-	// DestNamespace must be provided
-	if view.DestNamespaceReplaceCount > -1 && view.DestNamespace == "" {
-		return fmt.Errorf("dest_namespace is required when dest_namespace_replace_count is set to %d", view.DestNamespaceReplaceCount)
-	}
-
 	return nil
 }
 
