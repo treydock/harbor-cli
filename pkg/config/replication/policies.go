@@ -132,6 +132,12 @@ func validateConfig(config *PolicyConfig) error {
 		return fmt.Errorf("name is required")
 	}
 
+	if config.DestNamespaceReplaceCount != nil {
+		if *config.DestNamespaceReplaceCount < -1 || *config.DestNamespaceReplaceCount > 3 {
+			return fmt.Errorf("dest_namespace_replace_count cannot be less than -1 or greater than 3")
+		}
+	}
+
 	if config.ReplicationMode != "" {
 		mode := strings.ToLower(config.ReplicationMode)
 		if mode != "push" && mode != "pull" {
