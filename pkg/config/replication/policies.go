@@ -29,7 +29,7 @@ type PolicyConfig struct {
 	Name                      string               `yaml:"name" json:"name"`
 	Description               string               `yaml:"description" json:"description"`
 	DestNamespace             string               `yaml:"dest_namespace,omitempty" json:"dest_namespace,omitempty"`
-	DestNamespaceReplaceCount int8                 `yaml:"dest_namespace_replace_count,omitempty" json:"dest_namespace_replace_count,omitempty"`
+	DestNamespaceReplaceCount *int8                `yaml:"dest_namespace_replace_count,omitempty" json:"dest_namespace_replace_count,omitempty"`
 	ReplicationMode           string               `yaml:"replication_mode,omitempty" json:"replication_mode,omitempty"`
 	Filter                    []*ReplicationFilter `yaml:"replication_filter,omitempty" json:"replication_filter,omitempty"`
 	TargetRegistry            string               `yaml:"target_registry,omitempty" json:"target_registry,omitempty"`
@@ -98,11 +98,17 @@ func LoadConfigFromYAMLorJSON(filename string, fileType string) (*create.CreateV
 	}
 	log.Debug("Replication policy configuration validated successfully")
 
+	var destNamespaceReplaceCount int8
+	if config.DestNamespaceReplaceCount == nil {
+		destNamespaceReplaceCount = -1
+	} else {
+		destNamespaceReplaceCount = *config.DestNamespaceReplaceCount
+	}
 	opts := &create.CreateView{
 		Name:                      config.Name,
 		Description:               config.Description,
 		DestNamespace:             config.DestNamespace,
-		DestNamespaceReplaceCount: config.DestNamespaceReplaceCount,
+		DestNamespaceReplaceCount: destNamespaceReplaceCount,
 		ReplicationMode:           normalizeReplicationMode(config.ReplicationMode),
 		TriggerType:               normalizeTriggerMode(config.TriggerMode),
 		TargetRegistry:            config.TargetRegistry,

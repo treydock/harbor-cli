@@ -288,6 +288,9 @@ func applyReplicationUpdateFlags(cmd *cobra.Command, createView *create.CreateVi
 		createView.DestNamespace = opts.DestNamespace
 	}
 	if flags.Changed("dest-namespace-replace-count") {
+		if opts.DestNamespaceReplaceCount < -1 || opts.DestNamespaceReplaceCount > 3 {
+			return fmt.Errorf("--dest-namespace-replace-count cannot be less than -1 or greater than 3")
+		}
 		createView.DestNamespaceReplaceCount = opts.DestNamespaceReplaceCount
 	}
 
