@@ -65,6 +65,10 @@ func CreateCommand() *cobra.Command {
 				return fmt.Errorf("failed to get registry with ID %d: %v", registryID, err)
 			}
 
+			if err := validateCreateView(opts); err != nil {
+				return fmt.Errorf("invalid replication policy configuration: %w", err)
+			}
+
 			policy := ConvertToPolicy(opts, registry)
 			response, err := api.CreateReplicationPolicy(&replication.CreateReplicationPolicyParams{
 				Policy: policy,
@@ -81,6 +85,22 @@ func CreateCommand() *cobra.Command {
 	flags.StringVarP(&configFile, "policy-config-file", "f", "", "YAML/JSON file with robot configuration")
 
 	return cmd
+}
+
+// validateCreateView validates the CreateView before converting to policy.
+func validateCreateView(view *create.CreateView) error {
+	// Validate DestNamespaceReplaceCount is within valid range
+	if view.DestNamespaceReplaceCount < -1 || view.DestNamespaceReplaceCount > 3 {
+		return fmt.Errorf("dest_namespace_replace_count must be between -1 and 3, got %d", view.DestNamespaceReplaceCount)
+	}
+
+	// If DestNamespaceReplaceCount is set to a non-default value (> -1),
+	// DestNamespace must be provided
+	if view.DestNamespaceReplaceCount > -1 && view.DestNamespace == "" {
+		return fmt.Errorf("dest_namespace is required when dest_namespace_replace_count is set to %d", view.DestNamespaceReplaceCount)
+	}
+
+	return nil
 }
 
 func ConvertToPolicy(view *create.CreateView, registry *models.Registry) *models.ReplicationPolicy {
